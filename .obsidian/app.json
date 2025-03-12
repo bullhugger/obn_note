@@ -1,0 +1,12 @@
+{
+  "vimMode": true,
+  "alwaysUpdateLinks": true,
+  "promptDelete": false,
+  "readableLineLength": false,
+  "pdfExportSettings": {
+    "pageSize": "Legal",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 80
+  }
+}
