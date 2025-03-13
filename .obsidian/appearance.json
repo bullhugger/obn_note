@@ -1,4 +1,7 @@
 {
   "cssTheme": "Obsidian gruvbox",
-  "theme": "obsidian"
+  "theme": "obsidian",
+  "enabledCssSnippets": [
+    "master"
+  ]
 }
