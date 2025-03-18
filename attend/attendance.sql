@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 17, 2025 at 04:51 PM
+-- Generation Time: Mar 18, 2025 at 04:45 PM
 -- Server version: 8.0.41-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.20
 
@@ -24,6 +24,52 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `accredidation`
+--
+
+CREATE TABLE `accredidation` (
+  `id` int NOT NULL,
+  `title` varchar(32) NOT NULL,
+  `project_id` int NOT NULL,
+  `worker_id` int NOT NULL,
+  `trade_id` int NOT NULL,
+  `rate` decimal(10,0) NOT NULL,
+  `ot_type` enum('fixed','multiply') DEFAULT NULL,
+  `ot_multiply` decimal(10,0) DEFAULT NULL,
+  `ot_rate` decimal(10,0) DEFAULT NULL,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accredidation_log`
+--
+
+CREATE TABLE `accredidation_log` (
+  `id` int NOT NULL,
+  `accredidation_id` int NOT NULL,
+  `action` enum('create','update','delete') DEFAULT NULL,
+  `title` varchar(32) NOT NULL,
+  `project_id` int NOT NULL,
+  `worker_id` int NOT NULL,
+  `trade_id` int NOT NULL,
+  `rate` decimal(10,0) NOT NULL,
+  `ot_type` enum('fixed','multiply') DEFAULT NULL,
+  `ot_multiply` decimal(10,0) DEFAULT NULL,
+  `ot_rate` decimal(10,0) DEFAULT NULL,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `attendance`
 --
 
@@ -33,31 +79,79 @@ CREATE TABLE `attendance` (
   `user_id` int NOT NULL,
   `user_team_id` int DEFAULT NULL,
   `trade_id` int NOT NULL,
+  `prayer` tinyint DEFAULT NULL,
   `punch_in` datetime NOT NULL,
   `punch_in_image` varchar(128) NOT NULL,
   `punch_out` datetime NOT NULL,
   `punch_out_image` varchar(128) DEFAULT NULL,
   `ot_punch_in` datetime DEFAULT NULL,
   `ot_punch_out` datetime DEFAULT NULL,
-  `prayer` tinyint DEFAULT '0'
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `award`
+-- Table structure for table `attendance_log`
 --
 
-CREATE TABLE `award` (
+CREATE TABLE `attendance_log` (
   `id` int NOT NULL,
-  `title` varchar(32) NOT NULL,
+  `attendance_id` int NOT NULL,
+  `action` enum('create','update','delete') DEFAULT NULL,
   `project_id` int NOT NULL,
-  `worker_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `user_team_id` int DEFAULT NULL,
   `trade_id` int NOT NULL,
-  `rate` decimal(10,0) NOT NULL,
-  `ot_type` enum('fixed','multiply') DEFAULT NULL,
-  `ot_multiply` decimal(10,0) DEFAULT NULL,
-  `ot_rate` decimal(10,0) DEFAULT NULL
+  `prayer` tinyint DEFAULT NULL,
+  `punch_in` datetime NOT NULL,
+  `punch_in_image` varchar(128) NOT NULL,
+  `punch_out` datetime NOT NULL,
+  `punch_out_image` varchar(128) DEFAULT NULL,
+  `ot_punch_in` datetime DEFAULT NULL,
+  `ot_punch_out` datetime DEFAULT NULL,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `daywork`
+--
+
+CREATE TABLE `daywork` (
+  `id` int NOT NULL,
+  `project_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `year_month` date DEFAULT NULL,
+  `worker_type` enum('KSK','SL','DSC','NSC') DEFAULT NULL,
+  `subcon_id` int DEFAULT NULL,
+  `accred_id` int DEFAULT NULL,
+  `day_from` int DEFAULT '0',
+  `day_to` int DEFAULT '0',
+  `salary_post` decimal(10,0) DEFAULT NULL,
+  `permit_deduct` decimal(10,0) DEFAULT NULL,
+  `loan_deduct` decimal(10,0) DEFAULT NULL,
+  `misc_deduct` decimal(10,0) DEFAULT NULL,
+  `dn_deduct` decimal(10,0) DEFAULT NULL,
+  `payment_made` decimal(10,0) DEFAULT NULL,
+  `transaction_type` enum('CASH','BANK','WALLET') DEFAULT NULL,
+  `trade_id` int DEFAULT NULL,
+  `status` tinyint DEFAULT '0',
+  `ref_no` varchar(64) DEFAULT NULL,
+  `record_id` varchar(64) DEFAULT NULL,
+  `payment_purpose` varchar(128) DEFAULT NULL,
+  `payment_date` date DEFAULT NULL,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -74,6 +168,28 @@ CREATE TABLE `project` (
   `commencement_date` date DEFAULT NULL,
   `completion_date` date DEFAULT NULL,
   `detail` varchar(512) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subcon`
+--
+
+CREATE TABLE `subcon` (
+  `id` int NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `company_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `reg_no` varchar(64) NOT NULL,
+  `contact` varchar(64) DEFAULT NULL,
+  `email` varchar(128) DEFAULT NULL,
+  `sub_type` varchar(16) DEFAULT NULL,
+  `status` varchar(8) DEFAULT NULL,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -198,6 +314,22 @@ CREATE TABLE `worker_type_list` (
 --
 
 --
+-- Indexes for table `accredidation`
+--
+ALTER TABLE `accredidation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `project_id` (`project_id`),
+  ADD KEY `worker_id` (`worker_id`);
+
+--
+-- Indexes for table `accredidation_log`
+--
+ALTER TABLE `accredidation_log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `project_id` (`project_id`),
+  ADD KEY `worker_id` (`worker_id`);
+
+--
 -- Indexes for table `attendance`
 --
 ALTER TABLE `attendance`
@@ -206,17 +338,29 @@ ALTER TABLE `attendance`
   ADD KEY `worker_id` (`user_id`);
 
 --
--- Indexes for table `award`
+-- Indexes for table `attendance_log`
 --
-ALTER TABLE `award`
+ALTER TABLE `attendance_log`
   ADD PRIMARY KEY (`id`),
   ADD KEY `project_id` (`project_id`),
-  ADD KEY `worker_id` (`worker_id`);
+  ADD KEY `worker_id` (`user_id`);
+
+--
+-- Indexes for table `daywork`
+--
+ALTER TABLE `daywork`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `project`
 --
 ALTER TABLE `project`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subcon`
+--
+ALTER TABLE `subcon`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -265,21 +409,45 @@ ALTER TABLE `worker_type_list`
 --
 
 --
+-- AUTO_INCREMENT for table `accredidation`
+--
+ALTER TABLE `accredidation`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `accredidation_log`
+--
+ALTER TABLE `accredidation_log`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `award`
+-- AUTO_INCREMENT for table `attendance_log`
 --
-ALTER TABLE `award`
+ALTER TABLE `attendance_log`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `daywork`
+--
+ALTER TABLE `daywork`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `subcon`
+--
+ALTER TABLE `subcon`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
@@ -323,18 +491,18 @@ ALTER TABLE `worker_type_list`
 --
 
 --
+-- Constraints for table `accredidation`
+--
+ALTER TABLE `accredidation`
+  ADD CONSTRAINT `accredidation_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
+  ADD CONSTRAINT `accredidation_ibfk_2` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`id`);
+
+--
 -- Constraints for table `attendance`
 --
 ALTER TABLE `attendance`
   ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
   ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `worker` (`id`);
-
---
--- Constraints for table `award`
---
-ALTER TABLE `award`
-  ADD CONSTRAINT `award_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
-  ADD CONSTRAINT `award_ibfk_2` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`id`);
 
 --
 -- Constraints for table `users`
