@@ -13,15 +13,58 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "attend/031325.md",
+                "file": "attend/Day Work.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "031325"
+              "title": "Day Work"
+            }
+          },
+          {
+            "id": "23b00b3f17a0c4e5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "031825.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "031825"
+            }
+          },
+          {
+            "id": "cc3b228a2cd2502b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Worker.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Worker"
+            }
+          },
+          {
+            "id": "a361ce11376c7848",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Custom pages for user type.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Custom pages for user type"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -163,15 +206,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e0c8b732630cfd25",
+  "active": "a361ce11376c7848",
   "lastOpenFiles": [
-    "attend/031225.md",
-    "attend/031325.md",
+    "Worker.md",
+    "031825.md",
+    "attend/Day Work.md",
+    "Custom pages for user type.md",
     "attend/Goal & Objective.md",
+    "attend/031325.md",
+    "attend/031225.md",
     "attend/Workforce attendance.md",
     "attend/Worker Type.md",
     "attend/Terminal.md",
-    "attend/Day Work.md",
     "attend/031125.md",
     "attend/attendance.sql",
     "attend/Unconfirmed 424296.crdownload",
