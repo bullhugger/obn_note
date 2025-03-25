@@ -1,0 +1,27 @@
+{
+  "short_name": "PRO",
+  "name": "PROGRESSIVELY",
+  "icons": [
+    {
+      "src": "https://progressive.volv.my/progressive/aintech/public/media/logo-w.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "https://progressive.volv.my/progressive/aintech/login",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "lang": "en",
+  "description": "Create, view and edit your project and track its progress",
+  "id": "progressivelytracker",
+  "orientation": "natural",
+  "dir": "ltr",
+  "display_override": [
+    "window-controls-overlay",
+    "browser"
+  ],
+  "launch_handler": {
+      "client_mode": "navigate"
+  }
+}
