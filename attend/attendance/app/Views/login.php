@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
-    <title>Progressive App</title>
+    <title>Attendance</title>
 	<meta name="description" content="">
     <meta name="keywords" content="bootstrap 4, mobile template, cordova, phonegap, mobile, html" />
     <link href="<?= base_url(); ?>img/icon/192x192.png" type="text/css" sizes="180x180" rel="apple-touch-icon" />
@@ -28,19 +28,30 @@
     <div id="appCapsule" class="pt-15">
         <div class="login-form mt-1">
             <div class="section">
-            <img src="<?= base_url(); ?>media/logo.png" alt="Progressive App" width="140">
+            <img src="<?= base_url(); ?>media/logo.png" alt="Attendance" width="140">
             </div>
             <div class="section mt-3">
-                <h2>Progressive App</h2>
+                <h2>Attendance</h2>
 				<h4>Login</h4>
             </div>
             <div class="section mt-1 mb-5">
                 <div class="mb-5">
+                <?php $session = session(); ?>
+                <?php if ($session->getFlashData('error')): ?>
+                    <div class="alert alert-danger">
+                        <?= $session->getFlashData('error'); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($session->getFlashData('success')): ?>
+                    <div class="alert alert-success">
+                        <?= $session->getFlashData('success'); ?>
+                    </div>
+                <?php endif; ?>
                 </div>
-                <form name="login_form" action="<?= base_url(); ?>MobileLogin/processLogin" method="post">
+                <form name="loginForm" action="<?= base_url(); ?>Login/processLogin" method="post">
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <input type="text" class="form-control" id="email1" placeholder="User ID" name="username">
+                            <input type="text" class="form-control" id="email" placeholder="User ID" name="username">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
@@ -83,10 +94,15 @@
                         alert('Email cannot be empty.');
                     }
                 })
+                setTimeout(function() {
+                    $('.alert').alert('close');
+                }, 5000);
+/*                $("#loginForm inputname=['username']").on('change', function(e) {
+                    $(this).length > 
+            })*/
             });
-
             $(document).on('click keypress', function() {
-                $('#alertBlock').alert('close');
+                $('.alert').alert('close');
             })
     </script>
 </body>

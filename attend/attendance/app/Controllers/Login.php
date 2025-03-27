@@ -1,62 +1,64 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\mobileLoginModel;
-use App\Models\mobileHomeModel;
-use App\Models\userModel;
+use App\Models\loginModel;
+use App\Models\homeModel;
 
-class MobileLogin extends BaseController {
+class Login extends BaseController {
 
     public function index() {
         $session = session();
         $data = [];
         if($session->get("user_id")) {
             $company_id = $session->get("company_id");
-            $mobileHomeModel = new mobileHomeModel();
-            $ps_list = $mobileHomeModel->getProjectList($company_id);
+            $homeModel = new homeModel();
+            $ps_list = $homeModel->getProjectList($company_id);
             $data["query_project_list"] = $ps_list;
-            return view("mobile/home", $data);
+            return view("home", $data);
         }
-        return view("mobile/login", $data);
+        return view("login", $data);
     }
 
     public function processLogin() {
         $session = session();
-        $mobileLoginModel = new mobileLoginModel();
+        $loginModel = new loginModel();
         $username = $this->request->getPost("username");
         $password = $this->request->getPost("password");
-        $user = $mobileLoginModel->getUser($username);
-        $result = print_r($user, true);
-        if(!$user) {
-            $session->setFlashData('error', 'No username found for {$user}.');
-            $data['messages'] = "Incorrect username or password.";
-            return view('mobile/login', $data);
+        if(empty($username) || empty($password)) {
+            $session->setFlashData("error", "Username and or password is empty.");
+            return view("login");
         }
-        if(!password_verify($password, $user['user_pass'])) {
-            $session->setFlashData('error', 'Incorrect password.');
-            $data['messages'] = "Incorrect username or password.";
-            return view('mobile/login', $data);
+        $user = $loginModel->getUser($username);
+        if(!$user) {
+            $session->setFlashData("error", "No username found for {$user}.");
+            $data["messages"] = "Incorrect username or password.";
+            return view("login", $data);
+        }
+        if(!password_verify($password, $user["user_pass"])) {
+            $session->setFlashData("error", "Incorrect password.");
+            $data["messages"] = "Incorrect username or password.";
+            return view("login", $data);
         }
         $session->set([
-            'user_id' => $user['id'],
-            'logged_in' => true,
-            'company_id' => $user['company_id'],
+            "user_id" => $user["id"],
+            "logged_in" => true,
+            "company_id" => $user["company_id"],
         ]);
-        return redirect()->to(base_url().'MobileHome');
+        return redirect()->to(base_url()."home");
     }
 
     public function logout() {
         $session = session();
         $session->destroy();
-        $data['messages'] = "You've been logged out.";
-        return view('mobile/login', $data);
+        $data["messages"] = "Logout successful.";
+        return view("login", $data);
     }
 
     public function checkSession() {
         $session = session();
-        if(!$session->get('id')) {
-            $data['messages'] = "Please login to continue";
-            return view('mobile/login', $data);
+        if(!$session->get("id")) {
+            $data["messages"] = "Please login to continue";
+            return view("login", $data);
         }
     }
 }

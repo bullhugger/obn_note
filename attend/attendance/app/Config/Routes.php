@@ -1,9 +1,11 @@
 <?php
 
-use CodeIgniter\Router\RouteCollection;
+namespace Config;
 
-/**
- * @var RouteCollection $routes
- */
-$routes->get('/', 'Home::index');
+use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Router\RouteCollection;
+$routes = Services::routes();
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setTranslateURIDashes(false);
 $routes->setAutoRoute(true);
+
