@@ -78,6 +78,11 @@
                     </div>
                     <div class="form-group boxed">
                         <div class="input-wrapper">
+                            <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
                             <input type="password" class="form-control" id="register_password" placeholder="Password" name="password">
                         </div>
                     </div>

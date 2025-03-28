@@ -27,5 +27,10 @@ class loginModel extends Model {
         return $result;
     }
 
+    public function insertUser($signup_data) {
+        $result = $this->db->table("USER_user")->insert($signup_data);
+        return $result;
+    }
+
 }
 ?>
