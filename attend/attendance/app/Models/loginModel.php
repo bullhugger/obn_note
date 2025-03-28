@@ -15,8 +15,15 @@ class loginModel extends Model {
     protected $allowedColumns = ["USER_NAME", "USER_PASS", "USER_EMAIL"];
 
     public function getUser($username) {
-        $sql = "SELECT ID, USER_NAME, USER_GROUP_ID, USER_PASS, USER_EMAIL FROM USER_user WHERE USER_NAME=?";
-        $result = $this->query($sql, [$username])->getRowArray();
+        $query = "SELECT ID, USER_NAME, USER_GROUP_ID, USER_PASS, USER_EMAIL FROM USER_user WHERE USER_NAME=?";
+        $result = $this->query($query, [$username])->getRowArray();
+        return $result;
+    }
+
+    public function checkEmail($email) {
+        $query = "SELECT id FROM USER_user WHERE EMAIL=? LIMIT 1";
+        $result = $this->query($query, [$email])->getRowArray();
+        $result = empty($result) ? false : true;
         return $result;
     }
 

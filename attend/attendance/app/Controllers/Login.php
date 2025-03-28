@@ -54,12 +54,26 @@ class Login extends BaseController {
         return view("login", $data);
     }
 
-    public function checkSession() {
+    public function signupProcess() {
         $session = session();
-        if(!$session->get("id")) {
-            $data["messages"] = "Please login to continue";
-            return view("login", $data);
+        $company_id = $this->request->getPost("company_id");
+        $password = $this->request->getPost("password");
+        $email = $this->request->getPost("email");
+        $loginModel = new loginModel();
+        $email_check = $loginModel->checkEmail($email);
+        if($email_check) {
+            $signup_data = [
+                "COMPANY_ID" => $company_id,
+                "PASSWORD" => $password,
+                "EMAIL" => $email
+            ];
+            $loginModel->insertUser($signup_data);
+        }
+        else {
+            $session->setFlash("error", "Failed to register user.");
+            return view("login");
         }
     }
+
 }
 ?>

@@ -48,7 +48,7 @@
                     </div>
                 <?php endif; ?>
                 </div>
-                <form name="loginForm" action="<?= base_url(); ?>Login/processLogin" method="post">
+                <form id="loginForm" name="loginForm" action="<?= base_url(); ?>Login/processLogin" method="post">
                     <div class="form-group boxed">
                         <div class="input-wrapper">
                             <input type="text" class="form-control" id="email" placeholder="User ID" name="username">
@@ -65,8 +65,25 @@
                             </i>
                         </div>
                     </div>
-                    <div class="form-button-group">
+                    <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block btn-lg">Log in</button>
+                        <a id="signup_btn" class="btn btn-success btn-block btn-lg">Sign up</a>
+                    </div>
+                </form>
+                <form id="signupForm" name="signupForm" action="<?= base_url(); ?>Login/signupProcess" method="post">
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="text" class="form-control" id="company_id" placeholder="Company ID" name="company_id">
+                        </div>
+                    </div>
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <input type="password" class="form-control" id="register_password" placeholder="Password" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block btn-lg">Submit</button>
+                        <a id="login_back" class="btn btn-secondary btn-block btn-lg">Back</a>
                     </div>
                 </form>
             </div>
@@ -97,9 +114,23 @@
                 setTimeout(function() {
                     $('.alert').alert('close');
                 }, 5000);
-/*                $("#loginForm inputname=['username']").on('change', function(e) {
-                    $(this).length > 
-            })*/
+                $("#loginForm input[name='username']").on('change', function(e) {
+                    if($(this).val().length < 4) {
+                        e.preventDefault();
+                        alert('Please enter a valid login ID.');
+                    }
+                })
+                $("#signupForm").hide();
+                $("#signup_btn").on("click", function() {
+                    $("#loginForm").slideUp(100,function() {
+                        $("#signupForm").slideDown(100);
+                    });
+                })
+                $("#login_back").on("click", function() {
+                    $("#signupForm").slideUp(100, function() {
+                        $("#loginForm").slideDown(100);
+                    })
+                })
             });
             $(document).on('click keypress', function() {
                 $('.alert').alert('close');
